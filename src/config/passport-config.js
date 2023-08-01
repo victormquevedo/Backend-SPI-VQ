@@ -99,6 +99,13 @@ export const initGithub = () => {
         } catch (error) {
             return done(null, error)
         }
+        passport.serializeUser((user,done) => {
+            done(null, user._id)
+        })
+        
+        passport.deserializeUser( async (id , done) => {
+            let user = await userModel.findById(id)
+            done(null, user)
+        })
     }))
 }
-
